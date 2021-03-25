@@ -6,6 +6,7 @@ public class GameToggle : MonoBehaviour
 {
     [SerializeField] Canvas modePanel;
     [SerializeField] GameObject GUI;
+    [SerializeField] GameObject boardManager;
 
     private bool active = false;
 
@@ -13,6 +14,7 @@ public class GameToggle : MonoBehaviour
     {
         modePanel.enabled = true;
         GUI.SetActive(false);
+        boardManager.SetActive(false);
     }
 
     public void ToggleGame()
@@ -25,5 +27,7 @@ public class GameToggle : MonoBehaviour
     {
         modePanel.enabled = false;
         GUI.SetActive(true);
+        boardManager.SetActive(true);
+
     }
 }
