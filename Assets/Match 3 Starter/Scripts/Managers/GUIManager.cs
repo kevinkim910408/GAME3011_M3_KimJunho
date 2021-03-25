@@ -34,6 +34,10 @@ public class GUIManager : MonoBehaviour
 
     public Text scoreTxt;
     public Text moveCounterTxt;
+    public Text timerTxt;
+
+    public float currentTime;
+    public float maxTime;
 
     private int score, moveCounter;
 
@@ -41,8 +45,13 @@ public class GUIManager : MonoBehaviour
     {
         instance = GetComponent<GUIManager>();
         moveCounter = 99;
+        currentTime = maxTime;
     }
 
+    private void Update()
+    {
+        SetTimer();
+    }
     // Show the game over panel
     public void GameOver()
     {
@@ -101,6 +110,20 @@ public class GUIManager : MonoBehaviour
         yield return new WaitUntil(() => !BoardManager.instance.IsShifting);
         yield return new WaitForSeconds(.25f);
         GameOver();
+    }
+
+    private void SetTimer()
+    {
+        timerTxt.text = currentTime.ToString("N0");
+
+        if (currentTime > 0f)
+        {
+            currentTime -= 1 * Time.deltaTime;
+        }
+        if (currentTime <= 0f)
+        {
+            currentTime = 0f;
+        }
     }
 
 }
