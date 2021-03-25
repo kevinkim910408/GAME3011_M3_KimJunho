@@ -39,7 +39,7 @@ public class GUIManager : MonoBehaviour
     public float maxTime;
     public float delayTime;
 
-    private int score; // moveCounter;
+    public int score; // moveCounter;
 
     bool isStartCheckTime;
 
