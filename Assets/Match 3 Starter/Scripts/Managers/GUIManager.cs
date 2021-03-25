@@ -30,21 +30,20 @@ public class GUIManager : MonoBehaviour
 
     public GameObject gameOverPanel;
     public Text yourScoreTxt;
-    public Text highScoreTxt;
 
     public Text scoreTxt;
-    public Text moveCounterTxt;
+    //public Text moveCounterTxt;
     public Text timerTxt;
 
     public float currentTime;
     public float maxTime;
 
-    private int score, moveCounter;
+    private int score; // moveCounter;
 
     void Awake()
     {
         instance = GetComponent<GUIManager>();
-        moveCounter = 99;
+        //moveCounter = 99;
         currentTime = maxTime;
     }
 
@@ -55,20 +54,7 @@ public class GUIManager : MonoBehaviour
     // Show the game over panel
     public void GameOver()
     {
-        GameManager.instance.gameOver = true;
-
         gameOverPanel.SetActive(true);
-
-        if (score > PlayerPrefs.GetInt("HighScore"))
-        {
-            PlayerPrefs.SetInt("HighScore", score);
-            highScoreTxt.text = "New Best: " + PlayerPrefs.GetInt("HighScore").ToString();
-        }
-        else
-        {
-            highScoreTxt.text = "Best: " + PlayerPrefs.GetInt("HighScore").ToString();
-        }
-
         yourScoreTxt.text = score.ToString();
     }
 
@@ -86,24 +72,24 @@ public class GUIManager : MonoBehaviour
         }
     }
 
-    public int MoveCounter
-    {
-        get
-        {
-            return moveCounter;
-        }
+    //public int MoveCounter
+    //{
+    //    get
+    //    {
+    //        return moveCounter;
+    //    }
 
-        set
-        {
-            moveCounter = value;
-            if (moveCounter <= 0)
-            {
-                moveCounter = 0;
-                StartCoroutine(WaitForShifting());
-            }
-            moveCounterTxt.text = moveCounter.ToString();
-        }
-    }
+    //    set
+    //    {
+    //        moveCounter = value;
+    //        if (moveCounter <= 0)
+    //        {
+    //            moveCounter = 0;
+    //            StartCoroutine(WaitForShifting());
+    //        }
+    //        //moveCounterTxt.text = moveCounter.ToString();
+    //    }
+    //}
 
     private IEnumerator WaitForShifting()
     {
@@ -123,6 +109,7 @@ public class GUIManager : MonoBehaviour
         if (currentTime <= 0f)
         {
             currentTime = 0f;
+            GameOver();
         }
     }
 
