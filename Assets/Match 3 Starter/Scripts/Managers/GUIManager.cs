@@ -37,18 +37,28 @@ public class GUIManager : MonoBehaviour
 
     public float currentTime;
     public float maxTime;
+    public float delayTime;
 
     private int score; // moveCounter;
+
+    bool isStartCheckTime;
 
     void Awake()
     {
         instance = GetComponent<GUIManager>();
         //moveCounter = 99;
         currentTime = maxTime;
+        isStartCheckTime = false;
+        delayTime = 1.1f;
     }
 
     private void Update()
     {
+        delayTime -= 1 * Time.deltaTime;
+        if(delayTime <= 0)
+        {
+            isStartCheckTime = true;
+        }
         SetTimer();
     }
     // Show the game over panel
@@ -102,15 +112,25 @@ public class GUIManager : MonoBehaviour
     {
         timerTxt.text = currentTime.ToString("N0");
 
-        if (currentTime > 0f)
+        if (isStartCheckTime)
         {
-            currentTime -= 1 * Time.deltaTime;
+            if (currentTime > 0f)
+            {
+                currentTime -= 1 * Time.deltaTime;
+            }
+            if (currentTime <= 0f)
+            {
+                currentTime = 0f;
+                GameOver();
+            }
         }
-        if (currentTime <= 0f)
-        {
-            currentTime = 0f;
-            GameOver();
-        }
+        
+        //StartCoroutine("DelayTime");
+    }
+    IEnumerator DelayTime()
+    {
+        yield return new WaitForSeconds(1.1f);
+        
     }
 
 }
